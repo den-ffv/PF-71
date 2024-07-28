@@ -1,0 +1,33 @@
+node_modules/
+dist/
+build/
+.env
+
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+node_modules/
+jspm_packages/
+
+*.tsbuildinfo
+
+# backend
+/server/node_modules/
+/server/dist/
+server/.env
+
+# frontend
+/www/node_modules/
+www/build/
+
+.DS_Store
+*.swp
+
+.idea/
+
+.vscode/
+
+docker-compose.override.yml
