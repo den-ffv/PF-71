@@ -38,5 +38,5 @@ app.get('/user', (req: Request, res: Response) => {
 });
 
 app.listen(port, () => {
-    console.log("SERVER START⚠️")
+    console.log("SERVER START 🚀️")
 });

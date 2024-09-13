@@ -1,0 +1,14 @@
+{
+  "name": "pj-1",
+  "version": "1.0.0",
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently --raw \"npm --prefix ./www run dev\" \"npm --prefix ./server run dev\" "
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^9.0.1"
+  }
+}

@@ -1,0 +1,14 @@
+.mobile__list{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: wheat;
+    width: 100%;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: 0.5s;
+}
+.mobile__list.active{
+    transform: translateX(-20%);
+    transition: 0.5s;
+}
