@@ -15,6 +15,21 @@ const Header = () => {
     const toggleMenu = () => {
         setIsActive(!isActive);
     };
+
+    React.useEffect(() => {
+        const handleResize = () => {
+            if(window.innerWidth > 900) {
+                setIsActive(false);
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+
+    }, [])
+
     return (
         <div className='header'>
             <Link to='/' className='logo'></Link>
@@ -29,7 +44,7 @@ const Header = () => {
                 <div className="bar2"></div>
                 <div className="bar3"></div>
             </div>
-            <MobileMenu active={isActive}/>
+            <MobileMenu active={isActive} setActive={toggleMenu}/>
         </div>
     );
 };

@@ -1,14 +1,36 @@
-.mobile__list{
+.mobile{
     position: absolute;
     top: 0;
     left: 0;
-    background: wheat;
-    width: 100%;
+    background: #ffffff;
+    width: 80%;
     height: 100vh;
     transform: translateX(-100%);
     transition: 0.5s;
+    padding: 40px;
 }
-.mobile__list.active{
-    transform: translateX(-20%);
+.mobile.active{
+    transform: translateX(-0%);
     transition: 0.5s;
+}
+.mobile__list{
+    display: flex;
+    flex-direction: column;
+    /*align-items: center;*/
+    /*gap: 10px;*/
+    margin: 10px 0px;
+}
+.mobile__list a{
+    border-radius: 10px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 40px;
+    transition: 0.5s;
+    padding: 5px 30px;
+}
+.mobile__list a:hover{
+    /*color: #a1a1a1;*/
+    transition: 0.5s;
+    background: #f3e7d0;
 }

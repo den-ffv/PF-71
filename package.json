@@ -4,7 +4,8 @@
   "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently --raw \"npm --prefix ./www run dev\" \"npm --prefix ./server run dev\" "
+    "dev": "concurrently --raw \"npm --prefix ./www run dev\" \"npm --prefix ./server run dev\" ",
+    "prod": "concurrently \"cd ./client && pnpm run dev\" \"cd ./server && pnpm run prod\""
   },
   "author": "",
   "license": "ISC",

@@ -90,5 +90,13 @@
     /*    transform-origin: center;*/
     /*}*/
 
+}
 
+@media (max-width: 900px) {
+    .header__list{
+        display: none;
+    }
+    .burger-menu{
+        display: flex;
+    }
 }
