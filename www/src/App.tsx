@@ -1,4 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
+
+import Home from "./pages/Home.tsx";
+import About from "./pages/About.tsx";
+
 import Header from "./components/Header.tsx";
 
 function App() {
@@ -7,9 +11,10 @@ function App() {
       <div className='wrapper'>
           <Header/>
           <Routes>
-              <Route path='/user' element={<p>user11</p>} />
-              <Route path='/' element={<p>home</p>} />
-              <Route path='/test' element={<p>test</p>} />
+              <Route path='/' element={<Home/>} />
+              <Route path='/about' element={<About/>} />
+              <Route path='/work' element={<p>work</p>} />
+              <Route path='/note' element={<p>note</p>} />
           </Routes>
       </div>
   )
