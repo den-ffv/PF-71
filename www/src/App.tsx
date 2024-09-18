@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Home from "./pages/Home.tsx";
 import About from "./pages/About.tsx";
 import Notes from "./pages/Notes.tsx";
-import Work from "./pages/Work.tsx";
+import Works from "./pages/Works.tsx";
 
 
 import Header from "./components/Header.tsx";
@@ -16,7 +16,7 @@ function App() {
           <Routes>
               <Route path='/' element={<Home/>} />
               <Route path='/about' element={<About/>} />
-              <Route path='/work' element={<Work/>} />
+              <Route path='/works' element={<Works/>} />
               <Route path='/notes' element={<Notes/>} />
           </Routes>
       </div>
