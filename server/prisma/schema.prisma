@@ -13,17 +13,72 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Autor {
   id        Int      @id @default(autoincrement())
   email     String   @unique
-  firstname String?
-  lastname  String?
   password  String
-  role      String   @default("USER")
+  firstname String
+  lastname  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("user")
+  notes Note[] @relation("NoteToAutor")
+
+  @@map("autor")
+}
+
+model Note {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  autor_id  Int
+  autor     Autor    @relation("NoteToAutor", fields: [autor_id], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("note")
+}
+
+model About {
+  id          Int      @id @default(autoincrement())
+  title       String
+  summery     String
+  description String
+  image_url   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("about")
+}
+
+model Contact {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  contact_url String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("contact")
+}
+
+model PortfolioWork {
+  id             Int          @id @default(autoincrement())
+  title          String
+  description    String
+  image_url      String?
+  project_url    String?
+  category_id    Int?
+  category       Category?    @relation(fields: [category_id], references: [id], onDelete: SetNull)
+  technologies   Technology[]
+  date_completed DateTime?
+  is_featured    Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  PortfolioWorkToTechnology PortfolioWorkToTechnology[]
+
+  @@map("portfolio_work")
 }
 
 model Category {
@@ -41,7 +96,7 @@ model Category {
 model Technology {
   id          Int      @id @default(autoincrement())
   name        String   @unique
-  logoUrl     String?
+  logo_url    String?
   description String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -50,24 +105,6 @@ model Technology {
   PortfolioWorkToTechnology PortfolioWorkToTechnology[]
 
   @@map("technology")
-}
-
-model PortfolioWork {
-  id                        Int                         @id @default(autoincrement())
-  title                     String
-  description               String?
-  imageUrl                  String?
-  projectUrl                String?
-  category_id               Int?
-  category                  Category?                   @relation(fields: [category_id], references: [id], onDelete: SetNull)
-  technologies              Technology[]
-  dateCompleted             DateTime?
-  isFeatured                Boolean                     @default(false)
-  createdAt                 DateTime                    @default(now())
-  updatedAt                 DateTime                    @updatedAt
-  PortfolioWorkToTechnology PortfolioWorkToTechnology[]
-
-  @@map("portfolio_work")
 }
 
 model PortfolioWorkToTechnology {
