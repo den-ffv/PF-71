@@ -1,10 +1,15 @@
-import express, { Request, Response} from "express";
+import express from "express";
 import cors from "cors"
 
+import routes from "./routes/routes";
+
 const app = express();
-const port: number = 5000;
+const port = process.env.PORT;
 app.use(cors());
+app.use(express.json());
+
+app.use('/api', routes);
 
 app.listen(port, () => {
-    console.log("SERVER START 🚀️")
+    console.log(`SERVER START IN ${port} 🚀️`)
 });
