@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 
 import {menuItems} from "../utils/menu.ts";
@@ -11,6 +11,13 @@ import MobileMenu from "./MobileMenu.tsx";
 const Header = () => {
 
     const [isActive, setIsActive] = React.useState(false);
+    const [token, setToken] = React.useState<string | null>(null);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        setToken(token);
+    }, []);
 
     const toggleMenu = () => {
         setIsActive(!isActive);
@@ -32,7 +39,7 @@ const Header = () => {
 
     return (
         <div className='header'>
-            <Link to='/' className='logo'></Link>
+            <Link to='/' className='logo'>{token != null&& "$" }</Link>
             <ul className='header__list'>
                 {menuItems.map((item) => (
                     <Link className='header__link' to={item.path} key={item.id}>{item.value}</Link>

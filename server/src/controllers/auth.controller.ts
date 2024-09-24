@@ -13,9 +13,10 @@ class AuthController {
   }
   async signin(req: Request, res: Response): Promise<Response> {
     try {
-      const user = await prisma.autor.findUnique({ where: { id: Number(req.params.id) } });
-      return res.json(user);
+      const user = await prisma.autor.findUnique({where: {email: req.body.email}});
+      return res.status(200).json(user);
     }catch (error) {
+      console.error(error)
       return res.status(500).json({ error });
     }
   }
