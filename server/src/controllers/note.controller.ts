@@ -9,7 +9,7 @@ class NoteController {
     try {
       const notes: Note[] = await prisma.note.findMany();
       const count: number =  await prisma.note.count();
-      return res.status(201).json(notes, count);
+      return res.status(201).json({notes, count});
     }catch (error) {
       console.error(error);
       return res.status(500).json({ error: "Unable to fetch notes" });
