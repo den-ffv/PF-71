@@ -8,11 +8,11 @@ import { removeFields } from "../utils/helpers";
 class AuthController {
   async signup(req: Request, res: Response): Promise<Response> {
     try {
-      const {  email, password, firstname, lastname, createdAt, updatedAt } = req.body;
+      const {  email, password, firstname, lastname } = req.body;
 
 
       const passwordSold = await bcrypt.genSalt(5);
-      const hashPassword = await bcrypt.hash("123", passwordSold);
+      const hashPassword = await bcrypt.hash(password, passwordSold);
 
       const user = await prisma.autor.create({data: {
         email,

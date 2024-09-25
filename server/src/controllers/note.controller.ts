@@ -32,8 +32,15 @@ class NoteController {
 
   async create(req: Request, res: Response): Promise<Response> {
     try {
+
+      const { createdAt, updatedAt, ...data  } = req.body;
+
       const newNote = await prisma.note.create({
-        data: req.body
+        data: {
+          ...data,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
       });
       return res.json(newNote);
     }catch(error) {
@@ -45,12 +52,18 @@ class NoteController {
   async update(req: Request, res: Response): Promise<Response> {
     try{
       const id  = Number(req.params.id);
+      const { updatedAt, ...data  } = req.body;
+
       const updateNote = await prisma.note.update({
         where: { id },
-        data: req.body
+        data: {
+          ...data,
+          updatedAt: new Date()
+        }
       });
       return res.json(updateNote);
     }catch (error) {
+      console.error(error);
       return res.status(500).json({ error: "Error updating note" });
     }
   }
@@ -59,8 +72,9 @@ class NoteController {
     try {
       const id = Number(req.params.id);
       await prisma.note.delete({ where: { id } });
-      return res.status(204).send();
+      return res.status(204).send("Note deleted");
     }catch (error) {
+      console.error(error)
       return res.status(500).json({ error: "Error deleting note" });
     }
   }
