@@ -1,16 +1,24 @@
-import React from "react";
+type Note = {
+    title: string;
+    content: string;
+    createdAt: Date;
+  }
 
 import './Note.css';
+import { formatData } from "../assets/formatData";
 
-const Note = (props) => {
+const Note = (props: Note) => {
 
-    const {title, text} = props;
+    const {title, content, createdAt} = props;
+
+console.log(createdAt);
+
 
     return (
         <div className='note'>
-            <p className='note__data'>12-09-2024</p>
+            <p className='note__data'>{formatData(createdAt.toString())}</p>
             <h3 className='note__title'>{title}</h3>
-            <p className='note__text'>{text}</p>
+            <p className='note__text'>{content}</p>
         </div>
     );
 }

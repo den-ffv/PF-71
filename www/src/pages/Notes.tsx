@@ -1,20 +1,59 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import Title from "../components/Title.tsx";
 import Note from "../components/Note.tsx";
 
+export type NoteType = {
+  id: number;
+  title: string;
+  content: string;
+  autor_id: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+interface NotesData {
+    count: number;
+    notes: NoteType[];
+  }
+  
+
 const Notes = () => {
-    return (
-        <div>
-            <Title title={'Notes'}/>
-            <p>25 notes</p>
-            <div style={{ marginTop: 100 }}>
-                <Note title={'And those who were seen dancing, were thought to be crazy, by those who could not hear the music.'} text={'A classic example of a big mouth and pretty words that lead me to glorify gross oversimplifications. Yes, one might be misunderstood by others who cannot appreciate their perspective. Everyone hears a different music... the allure of perspectivism gets me everytime. It can justify almost everything.'}/>
-                <Note title={'And those who were seen dancing, were thought to be crazy, by those who could not hear the music.'} text={'A classic example of a big mouth and pretty words that lead me to glorify gross oversimplifications. Yes, one might be misunderstood by others who cannot appreciate their perspective. Everyone hears a different music... the allure of perspectivism gets me everytime. It can justify almost everything.'}/>
-                <Note title={'And those who were seen dancing, were thought to be crazy, by those who could not hear the music.'} text={'A classic example of a big mouth and pretty words that lead me to glorify gross oversimplifications. Yes, one might be misunderstood by others who cannot appreciate their perspective. Everyone hears a different music... the allure of perspectivism gets me everytime. It can justify almost everything.'}/>
-                <Note title={'And those who were seen dancing, were thought to be crazy, by those who could not hear the music.'} text={'A classic example of a big mouth and pretty words that lead me to glorify gross oversimplifications. Yes, one might be misunderstood by others who cannot appreciate their perspective. Everyone hears a different music... the allure of perspectivism gets me everytime. It can justify almost everything.'}/>
-                <Note title={'And those who were seen dancing, were thought to be crazy, by those who could not hear the music.'} text={'A classic example of a big mouth and pretty words that lead me to glorify gross oversimplifications. Yes, one might be misunderstood by others who cannot appreciate their perspective. Everyone hears a different music... the allure of perspectivism gets me everytime. It can justify almost everything.'}/>
-            </div>
-        </div>
-    );
-}
+  const [notes, setNotes] = useState<NotesData | null>(null);
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/api/note/list");
+        const data = await response.json();
+        setNotes(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchNotes();
+  }, []);
+
+  return (
+    <div>
+      <Title title={"Notes"} />
+      {notes === null ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <p>{notes.count} notes</p>
+          <div style={{ marginTop: 100 }}>
+            {notes.notes.map((note) => (
+              <Note
+                key={note.id}
+                createdAt={new Date(note.createdAt)}
+                title={note.title}
+                content={note.content}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
 export default Notes;
