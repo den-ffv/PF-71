@@ -17,7 +17,7 @@ class AboutController {
       res.status(200).json({message: 'Successfully fetched', data: aboutById});
     } catch (error: any) {
       console.error(error);
-      res.status(500).json({ error: 'Error fetching note', message: error.message });
+      res.status(500).json({ error: 'Error fetching about', message: error.message });
     }
   }
 
@@ -42,7 +42,7 @@ class AboutController {
       res.status(200).json({message: 'Successfully created', data: about});
     } catch (error: any) {
       console.error(error);
-      res.status(500).json({ error: 'Error creating note', message: error.message });
+      res.status(500).json({ error: 'Error creating about', message: error.message });
       
     }
   }
@@ -76,7 +76,7 @@ class AboutController {
       return res.status(200).json({message: 'Successfully updated', data: updatedAbout});
     } catch (error: any) {
       console.error(error);
-      return res.status(500).json({ error: 'Error updating note', message: error.message });
+      return res.status(500).json({ error: 'Error updating about', message: error.message });
     }
   }  
 
@@ -89,7 +89,7 @@ class AboutController {
       res.send({ message: 'About deleted successfully' });
     } catch (error: any) {
       console.error(error);
-      res.status(500).json({ error: 'Error deleting note', message: error.message });
+      res.status(500).json({ error: 'Error deleting about', message: error.message });
     }
   }
 }
