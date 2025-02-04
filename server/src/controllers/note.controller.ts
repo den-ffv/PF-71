@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import prisma from "../utils/prisma";
 
-import { Note } from "../utils/type";
+import { Note } from "@prisma/client";
 
 class NoteController {
 
