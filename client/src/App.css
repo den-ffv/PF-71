@@ -1,0 +1,10 @@
+.App {
+    display: flex;
+    padding: 50px;
+}
+.contend{
+    margin-left: 250px;
+    border-left: #c4c4c4 1px solid;
+    padding: 0 50px;
+    font-family: "IBM Plex Mono", monospace;
+}

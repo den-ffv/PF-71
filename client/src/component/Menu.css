@@ -1,0 +1,20 @@
+.menu{
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    padding: 10px 20px 10px 20px;
+    text-align: right;
+    font-family: "Lora", serif;
+    font-optical-sizing: auto;
+    font-style: italic;
+    position: fixed;
+}
+.menu a{
+    text-decoration: none;
+    color: #8c8c8c;
+    font-size: 1.0em;
+    margin: 6px 0;
+}
+.menu .active{
+    color: #000;
+}
