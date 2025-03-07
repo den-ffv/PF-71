@@ -7,103 +7,69 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Autor {
-  id         Int      @id @default(autoincrement())
-  email      String   @unique
-  password   String
-  firstname   String?
-  lastname   String?
-  created_at DateTime @default(now())
-  notes      Note[] @relation("NoteToAutor")
+model User {
+  id       String @id @default(cuid())
+  login    String @unique
+  password String
 
-  @@map("autor")
+  ProjectData  ProjectData[]
+  ThoughtsData ThoughtsData[]
+
+  @@map("users")
 }
 
-model Note {
-  id         Int      @id @default(autoincrement())
+model HomeData {
+  id      String @id @default(cuid())
+  title   String
+  content String
+
+  ContactData ContactData[]
+
+  @@map("home_data")
+}
+
+model ContactData {
+  id           String   @id @default(cuid())
+  title        String
+  content      String
+  home_data_id String
+  home_data    HomeData @relation(fields: [home_data_id], references: [id], onDelete: Cascade)
+  is_active    Boolean
+
+  @@map("contact_data")
+}
+
+model ExperienceData {
+  id         String   @id @default(cuid())
   title      String
+  date_start DateTime
+  date_end   DateTime
   content    String
-  autor_id   Int
-  autor      Autor    @relation("NoteToAutor", fields: [autor_id], references: [id])
-  is_active  Boolean  @default(true)
-  created_at DateTime @default(now())
+  is_active  Boolean
 
-  @@map("note")
+  @@map("experience_data")
 }
 
-model About {
-  id          Int      @id @default(autoincrement())
-  title       String
-  summery     String?
-  description String
-  image_url   String?
-  created_at  DateTime @default(now())
-  is_active   Boolean  @default(true)
+model ThoughtsData {
+  id        String   @id @default(cuid())
+  title     String
+  date      DateTime
+  content   String
+  is_active Boolean
+  user_id   String
+  user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  @@map("about")
+  @@map("thoughts_data")
 }
 
-model Contact {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  contact_url String?
-  created_at  DateTime @default(now())
-  is_active   Boolean  @default(true)
+model ProjectData {
+  id        String   @id @default(cuid())
+  title     String
+  date      DateTime
+  content   String
+  is_active Boolean
+  user_id   String
+  user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  @@map("contact")
-}
-
-model PortfolioWork {
-  id                        Int          @id @default(autoincrement())
-  title                     String
-  description               String
-  image_url                 String?
-  project_url               String?
-  category_id               Int?
-  category                  Category?    @relation(fields: [category_id], references: [id], onDelete: SetNull)
-  date_completed            DateTime?
-  is_featured               Boolean      @default(false)
-  is_active                 Boolean      @default(true)
-  created_at                DateTime     @default(now())
-  technologies              Technology[]
-  PortfolioWorkToTechnology PortfolioWorkToTechnology[]
-
-  @@map("portfolio_work")
-}
-
-model Category {
-  id             Int      @id @default(autoincrement())
-  name           String
-  description    String?
-  created_at     DateTime @default(now())
-  is_active      Boolean  @default(true)
-  portfolioWorks PortfolioWork[]
-
-  @@map("category")
-}
-
-model Technology {
-  id                        Int      @id @default(autoincrement())
-  name                      String   @unique
-  logo_url                  String?
-  description               String
-  created_at                DateTime @default(now())
-  updatedAt                 DateTime @updatedAt
-  is_active                 Boolean  @default(true)
-  portfolioWorks            PortfolioWork[]
-  PortfolioWorkToTechnology PortfolioWorkToTechnology[]
-
-  @@map("technology")
-}
-
-model PortfolioWorkToTechnology {
-  id                Int           @id @default(autoincrement())
-  portfolio_work_id Int
-  portfolio_work    PortfolioWork @relation(fields: [portfolio_work_id], references: [id])
-  technology_id     Int
-  technology        Technology    @relation(fields: [technology_id], references: [id])
-  is_active         Boolean       @default(true)
-
-  @@map("portfolio_work_to_technology")
+  @@map("project_data")
 }
