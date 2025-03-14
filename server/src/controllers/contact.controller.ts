@@ -1,84 +1,68 @@
-import { Request, Response } from 'express';
-import { Contact } from '@prisma/client';
-import prisma from '../utils/prisma';
+import { Request, Response } from "express";
+import ContactService from "../services/contact.service"; 
 
 class ContactController {
 
-  public static async getAll(req: Request, res: Response): Promise<any> {
+  public static async getContactLists(request: Request, response: Response): Promise<Response> {
     try {
-      const allContact: Contact[] = await prisma.contact.findMany();
+      const data = await ContactService.getList();
 
-      res.status(200).json({message: 'Successfully fetched', data: allContact});
-    } catch (error: any) {
-      console.error(error);
-      res.status(500).json({ error: 'Error fetching contact', message: error.message });
+      if (!data) {
+        return response.status(404).json({ message: "Contact not found" });
+      }
+      return response.status(200).json(data);
+    } catch (error) {
+      return response.status(500).json({ message: "Internal Server Error" });
     }
   }
 
-  public static async getById(req: Request, res: Response): Promise<any> {
+  public static async getContactById(request: Request, response: Response): Promise<Response> {
     try {
-      const id = Number(req.params.id);
-      const contactById: Contact | null = await prisma.contact.findUnique({
-        where: { id },
-      });
-      if (!contactById) {
-        res.status(404).json({ error: 'Contact not found' });
+      const { id } = request.params;
+      if (!id) {
+        return response.status(400).json({ message: "Id is required" });
       }
 
-      res.status(200).json({message: 'Successfully fetched', data: contactById});
-    } catch (error: any) {
-      console.error(error);
-      res.status(500).json({ error: 'Error fetching contact', message: error.message });
-    }
-  }
-
-  public static async create(req: Request, res: Response): Promise<any> {
-    try {
-      const data = req.body;
-
-      const allContact: Contact[] = await prisma.contact.findMany();
-
-      if (!allContact) {
-        res.status(404).json({ error: 'Contact not found' });
+      const data = await ContactService.getById(id);
+      if (!data) {
+        return response.status(404).json({ message: "Contact not found" });
       }
-      
-      const contact: Contact = await prisma.contact.create({
-        data,
-      });
-      res.status(200).json({message: 'Successfully created', data: contact});
-    } catch (error: any) {
-      console.error(error);
-      res.status(500).json({ error: 'Error creating contact', message: error.message });
+      return response.status(200).json(data);
+    } catch (error) {
+      return response.status(500).json({ message: "Internal Server Error" });
     }
   }
 
-  public static async update(req: Request, res: Response): Promise<any> {
+  public static async createContact(required: Request, res: Response): Promise<Response> {
     try {
-      const id = Number(req.params.id);
-      const data = req.body;
-  
-      const updatedContact = await prisma.contact.update({
-        where: { id },
-        data,
-      });
-  
-      return res.status(200).json({message: 'Successfully updated', data: updatedContact});
-    } catch (error: any) {
-      console.error(error);
-      return res.status(500).json({ error: 'Error updating contact', message: error.message });
-    }
-  }  
+      const newContact = await ContactService.create(required.body);
 
-  public static async delete(req: Request, res: Response): Promise<any> {
+      return res.status(201).json(newContact);
+    } catch (error) {
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
+
+  public static async updateContact(request: Request, res: Response): Promise<Response> {
     try {
-      const id = Number(req.params.id);
-      await prisma.contact.delete({
-        where: { id },
-      });
-      res.send({ message: 'Contact deleted successfully' });
-    } catch (error: any) {
-      console.error(error);
-      res.status(500).json({ error: 'Error deleting contact', message: error.message });
+
+      const updatedContact = await ContactService.update(request.params.id, request.body);
+      return res.status(200).json(updatedContact);
+    } catch (error) {
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
+
+  public static async deleteContact(req: Request, res: Response): Promise<Response> {
+    try {
+      const { id } = req.params;
+      if (!id) {
+        return res.status(400).json({ message: "Id is required" });
+      }
+      await ContactService.delete(id);
+      return res.status(200).json({ message: "Deleted successfully" });
+    } catch (error) {
+      return res.status(500).json({ message: "Internal Server Error" });
     }
   }
 }

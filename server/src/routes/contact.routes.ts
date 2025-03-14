@@ -1,12 +1,12 @@
-import { Router } from 'express';
-import ContactController from '../controllers/contact.controller';
+import { Router } from "express";
+import ContactController from "../controllers/contact.controller";
 
-const contactRouter = Router();
+const contractRouter = Router();
 
-contactRouter.get('/', ContactController.getAll);
-contactRouter.get('/:id', ContactController.getById);
-contactRouter.post('/', ContactController.create);
-contactRouter.put('/:id', ContactController.update);
-contactRouter.delete('/:id', ContactController.delete);
+contractRouter.get("/", ContactController.getContactLists);
+contractRouter.get("/:id", ContactController.getContactById);
+contractRouter.post("/", ContactController.createContact);
+contractRouter.put("/:id", ContactController.updateContact);
+contractRouter.delete("/:id", ContactController.deleteContact);
 
-export default contactRouter;
+export default contractRouter;
