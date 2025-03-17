@@ -1,20 +1,31 @@
+import { useEffect, useState } from "react";
 import {NavLink} from "react-router";
 
-const data = [
-  {id: 1, title: 'One', text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s'},
-  {id: 2, title: 'Two', text: 'Lorem Ipsum is simply dummy text oy. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s'},
-  {id: 3, title: 'Three', text: 'Lorem Ipsum is simply ds been the industry\'s standard dummy text ever since the 1500s'},
-  {id: 4, title: 'Fore', text: 'Lorem Ipsum is simply dummy text of the printins been the industry\'s standard dummy text ever since the 1500s'},
-];
 function Thoughts() {
+
+  const [thoughtsData, setThoughtsData] = useState([])
+  
+  const fatchData = async () => {
+    const response = await fetch('http://localhost:4040/api/thoughts')
+    const data = await response.json()
+    setThoughtsData(data)
+    console.log(data)
+  }
+
+  useEffect(() => {
+    fatchData()
+  }, [])
+
+  console.log(thoughtsData);
+  console.log('thoughts test');
 
   return (
     <>
       <h2>Thoughts</h2>
-      {data.map((item) => (
-        <div key={item.id}>
-          <NavLink to={`/thoughts/${item.id}`} >
-            <p>{item.title}...........................{item.id}</p>
+      {thoughtsData.map((thought: any) => (
+        <div key={thought.id}>
+          <NavLink to={`/thoughts/${thought.id}`} >
+            <p>{thought.title}...........................{thought.id}</p>
           </NavLink>
         </div>
       ))}

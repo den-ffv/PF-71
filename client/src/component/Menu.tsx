@@ -1,19 +1,16 @@
+import { MenuProps, TypeMenuItem } from '../type';
 import './Menu.css'
 import { NavLink } from "react-router";
 
 
-type TypeMenuItem = {
-  id: number
-  value: string,
-  url: string,
-}
-function Menu({menuItems}:TypeMenuItem[]): JSX.Element {
+
+function Menu({menuItems}:MenuProps): JSX.Element {
   return (
-    <ul className='menu'>
+    <nav className='menu'>
       {menuItems.map((menuItem: TypeMenuItem) => (
         <NavLink to={menuItem.url} key={menuItem.id}>{menuItem.value}</NavLink>
       ))}
-    </ul>
+    </nav>
   )
 }
 

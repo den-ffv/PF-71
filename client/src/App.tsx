@@ -7,10 +7,12 @@ import Project from "./pages/Project.tsx";
 import Thought from "./pages/Thought.tsx";
 import Experience from "./pages/Experience.tsx";
 import ExperienceOne from "./pages/ExperienceOne.tsx";
+import Login from "./pages/Login.tsx";
+import { TypeMenuItem } from "./type.ts";
 
-const data = [
+const data: TypeMenuItem[] = [
   {id: 1, value: 'Home', url: '/'},
-  {id: 3, value: 'Experience', url: '/experience' },
+  {id: 2, value: 'Experience', url: '/experience' },
   {id: 3, value: 'Thoughts', url: '/thoughts' },
   {id: 4, value: 'Project', url: '/project'},
 ]
@@ -28,10 +30,7 @@ function App() {
           <Route path="thoughts/:id" element={<Thought/>}/>
           <Route path="project" element={<Project/>}/>
 
-          <Route path='auth' element={<p>LAST home</p>}>
-            <Route path="login" element={<p>login</p>}/>
-            <Route path="register" element={<p>register</p>}/>
-          </Route>
+          <Route path='admin' element={<Login/>}/>
         </Routes>
       </div>
 

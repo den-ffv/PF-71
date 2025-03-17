@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import prisma from "../utils/prisma";
+import {prisma} from "../utils/prisma";
 
 
 class UsersController {
@@ -8,7 +8,11 @@ class UsersController {
       const { login, password } = request.body;
       console.log(123123123);
       
-      const user: any = await prisma.user.findMany();
+      const user: any = await prisma.user.findUnique({
+        where: {
+          login: login
+        }
+      });
       if (!user) {
         return response.status(404).json({ message: "User not found" });
       }

@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { PrismaService } from '../utils/prisma';
 
 class ProjectService {
-  private static tableName: keyof PrismaClient = 'experienceData';
+  private static tableName: keyof PrismaClient = 'projectData';
 
   public static async getList() {
     return PrismaService.getList(this.tableName);
